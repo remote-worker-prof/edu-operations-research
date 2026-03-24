@@ -33,7 +33,7 @@ uv run jupyter-book build . --warningiserror
 | published | ЛР-01. Теория линейного программирования | [source](01-lab-essentials/theory_linear_programming_for_beginners.md) | [page](https://remote-worker-prof.github.io/edu-operations-research/01-lab-essentials/theory_linear_programming_for_beginners.html) |
 | published | ЛР-01. Основной ноутбук | [source](01-lab-essentials/lab_01_linear_programming.ipynb) | [page](https://remote-worker-prof.github.io/edu-operations-research/01-lab-essentials/lab_01_linear_programming.html) |
 | published | ЛР-01. Самостоятельная часть | [source](01-lab-essentials/lab_01_part2_independent.ipynb) | [page](https://remote-worker-prof.github.io/edu-operations-research/01-lab-essentials/lab_01_part2_independent.html) |
-| published | ЛР-01.1. Supplementary applied case: fair-price audit | [source](01-lab-essentials/lab_01.1_corruption_detection_primal_dual.ipynb) | [page](https://remote-worker-prof.github.io/edu-operations-research/01-lab-essentials/lab_01.1_corruption_detection_primal_dual.html) |
+| published | ЛР-01.1. Дополнительный прикладной кейс (supplementary applied case): fair-price audit | [source](01-lab-essentials/lab_01.1_corruption_detection_primal_dual.ipynb) | [page](https://remote-worker-prof.github.io/edu-operations-research/01-lab-essentials/lab_01.1_corruption_detection_primal_dual.html) |
 | published | ЛР-02. Транспортная задача: обзор | [source](02-lab-transport-problem/README.md) | [page](https://remote-worker-prof.github.io/edu-operations-research/02-lab-transport-problem/README.html) |
 | published | ЛР-02. Теория | [source](02-lab-transport-problem/theory_transport_problem.md) | [page](https://remote-worker-prof.github.io/edu-operations-research/02-lab-transport-problem/theory_transport_problem.html) |
 | published | ЛР-02. Основной ноутбук | [source](02-lab-transport-problem/lab_02_transport_problem.ipynb) | [page](https://remote-worker-prof.github.io/edu-operations-research/02-lab-transport-problem/lab_02_transport_problem.html) |
@@ -45,10 +45,10 @@ uv run jupyter-book build . --warningiserror
 
 ## Как темы разведены
 
-- **ЛР-01**: базовое ЛП, геометрия, канонизация, первый `linprog`, вводная dual/KKT-логика.
-- **ЛР-01.1**: supplementary applied case по fair-price audit и primal-dual интерпретации в госзакупках.
+- **ЛР-01**: базовое ЛП, геометрия, канонизация, первый `linprog` и первое знакомство с двойственностью.
+- **ЛР-01.1**: дополнительный прикладной кейс (supplementary applied case) по госзакупкам, fair-price audit и primal-dual интерпретации.
 - **ЛР-02**: транспортная задача, баланс, фиктивные узлы и матрица перевозок.
-- **ЛР-03**: sensitivity-first лабораторная про shadow prices, `binding/slack`, сильную двойственность как проверку и сценарные изменения параметров.
+- **ЛР-03**: лабораторная с фокусом на анализ чувствительности (sensitivity-first): теневые цены (shadow prices), активные ограничения (binding), запас ресурса (slack) и сценарные изменения параметров.
 
 ### Roadmap
 
@@ -56,7 +56,7 @@ uv run jupyter-book build . --warningiserror
 
 ## Структура проекта
 
-- `01-lab-essentials/` — завершённые материалы ЛР-01 и supplementary applied case `01.1`.
+- `01-lab-essentials/` — завершённые материалы ЛР-01 и дополнительного прикладного кейса `01.1`.
 - `02-lab-transport-problem/` — новая ЛР-02 по транспортной задаче.
 - `03-lab-duality-sensitivity/` — полноценная ЛР-03 по двойственности и анализу чувствительности.
 - `.github/workflows/` — CI и публикация GitHub Pages.

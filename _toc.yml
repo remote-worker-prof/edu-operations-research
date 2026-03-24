@@ -11,7 +11,7 @@ parts:
       - file: 01-lab-essentials/lab_01_part2_independent
         title: Самостоятельная часть ЛР-01
       - file: 01-lab-essentials/lab_01.1_corruption_detection_primal_dual
-        title: "Supplementary applied case: fair-price audit"
+        title: "Дополнительный прикладной кейс (supplementary applied case): fair-price audit"
 
   - caption: ЛР-02. Транспортная задача
     chapters:
