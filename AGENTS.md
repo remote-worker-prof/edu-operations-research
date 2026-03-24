@@ -74,6 +74,7 @@ Use these commands when working on content and publication locally:
 ```bash
 uv sync --group authoring --group docs
 uv run python scripts/validate_notebooks.py
-uv run jupyter nbconvert --to notebook --execute --inplace 02-lab-transport-problem/lab_02_transport_problem.ipynb
+uv run python scripts/check_notebook_contracts.py
+uv run python scripts/execute_worked_examples.py
 uv run jupyter-book build . --warningiserror
 ```

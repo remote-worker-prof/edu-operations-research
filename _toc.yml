@@ -4,25 +4,69 @@ root: index
 parts:
   - caption: ЛР-01. Основы линейного программирования
     chapters:
+      - file: 01-lab-essentials/README
+        title: Обзор ЛР-01
       - file: 01-lab-essentials/theory_linear_programming_for_beginners
-        title: Теория для начинающих
-      - file: 01-lab-essentials/lab_01_linear_programming
-        title: Основной ноутбук ЛР-01
-      - file: 01-lab-essentials/lab_01_part2_independent
-        title: Самостоятельная часть ЛР-01
-      - file: 01-lab-essentials/lab_01.1_corruption_detection_primal_dual
-        title: "Дополнительный прикладной кейс (supplementary applied case): fair-price audit"
+        title: Теория ЛР-01
+      - file: 01-lab-essentials/lab_01_student_civil_01
+        title: "Student notebook: civil 01"
+      - file: 01-lab-essentials/lab_01_student_civil_02
+        title: "Student notebook: civil 02"
+      - file: 01-lab-essentials/lab_01_student_military_01
+        title: "Student notebook: military 01"
+      - file: 01-lab-essentials/lab_01_student_military_02
+        title: "Student notebook: military 02"
+      - file: 01-lab-essentials/examples-civil/README
+        title: Разобранные гражданские примеры ЛР-01
+        sections:
+          - file: 01-lab-essentials/examples-civil/lab_01_example_civil_01
+            title: Example civil 01
+          - file: 01-lab-essentials/examples-civil/lab_01_example_civil_02
+            title: Example civil 02
+          - file: 01-lab-essentials/examples-civil/lab_01_example_civil_03
+            title: Example civil 03
+      - file: 01-lab-essentials/examples-military/README
+        title: Разобранные военные примеры ЛР-01
+        sections:
+          - file: 01-lab-essentials/examples-military/lab_01_example_military_01
+            title: Example military 01
+          - file: 01-lab-essentials/examples-military/lab_01_example_military_02
+            title: Example military 02
+          - file: 01-lab-essentials/examples-military/lab_01_example_military_03
+            title: Example military 03
 
   - caption: ЛР-02. Транспортная задача
     chapters:
       - file: 02-lab-transport-problem/README
         title: Обзор ЛР-02
       - file: 02-lab-transport-problem/theory_transport_problem
-        title: Теория транспортной задачи
-      - file: 02-lab-transport-problem/lab_02_transport_problem
-        title: Основной ноутбук ЛР-02
-      - file: 02-lab-transport-problem/lab_02_part2_variants
-        title: Самостоятельные варианты ЛР-02
+        title: Теория ЛР-02
+      - file: 02-lab-transport-problem/lab_02_student_civil_01
+        title: "Student notebook: civil 01"
+      - file: 02-lab-transport-problem/lab_02_student_civil_02
+        title: "Student notebook: civil 02"
+      - file: 02-lab-transport-problem/lab_02_student_military_01
+        title: "Student notebook: military 01"
+      - file: 02-lab-transport-problem/lab_02_student_military_02
+        title: "Student notebook: military 02"
+      - file: 02-lab-transport-problem/examples-civil/README
+        title: Разобранные гражданские примеры ЛР-02
+        sections:
+          - file: 02-lab-transport-problem/examples-civil/lab_02_example_civil_01
+            title: Example civil 01
+          - file: 02-lab-transport-problem/examples-civil/lab_02_example_civil_02
+            title: Example civil 02
+          - file: 02-lab-transport-problem/examples-civil/lab_02_example_civil_03
+            title: Example civil 03
+      - file: 02-lab-transport-problem/examples-military/README
+        title: Разобранные военные примеры ЛР-02
+        sections:
+          - file: 02-lab-transport-problem/examples-military/lab_02_example_military_01
+            title: Example military 01
+          - file: 02-lab-transport-problem/examples-military/lab_02_example_military_02
+            title: Example military 02
+          - file: 02-lab-transport-problem/examples-military/lab_02_example_military_03
+            title: Example military 03
 
   - caption: ЛР-03. Двойственность и анализ чувствительности
     chapters:
@@ -30,7 +74,29 @@ parts:
         title: Обзор ЛР-03
       - file: 03-lab-duality-sensitivity/theory_03_duality_sensitivity
         title: Теория ЛР-03
-      - file: 03-lab-duality-sensitivity/lab_03_duality_sensitivity
-        title: Основной ноутбук ЛР-03
-      - file: 03-lab-duality-sensitivity/lab_03_part2_independent
-        title: Самостоятельная часть ЛР-03
+      - file: 03-lab-duality-sensitivity/lab_03_student_civil_01
+        title: "Student notebook: civil 01"
+      - file: 03-lab-duality-sensitivity/lab_03_student_civil_02
+        title: "Student notebook: civil 02"
+      - file: 03-lab-duality-sensitivity/lab_03_student_military_01
+        title: "Student notebook: military 01"
+      - file: 03-lab-duality-sensitivity/lab_03_student_military_02
+        title: "Student notebook: military 02"
+      - file: 03-lab-duality-sensitivity/examples-civil/README
+        title: Разобранные гражданские примеры ЛР-03
+        sections:
+          - file: 03-lab-duality-sensitivity/examples-civil/lab_03_example_civil_01
+            title: Example civil 01
+          - file: 03-lab-duality-sensitivity/examples-civil/lab_03_example_civil_02
+            title: Example civil 02
+          - file: 03-lab-duality-sensitivity/examples-civil/lab_03_example_civil_03
+            title: Example civil 03
+      - file: 03-lab-duality-sensitivity/examples-military/README
+        title: Разобранные военные примеры ЛР-03
+        sections:
+          - file: 03-lab-duality-sensitivity/examples-military/lab_03_example_military_01
+            title: Example military 01
+          - file: 03-lab-duality-sensitivity/examples-military/lab_03_example_military_02
+            title: Example military 02
+          - file: 03-lab-duality-sensitivity/examples-military/lab_03_example_military_03
+            title: Example military 03

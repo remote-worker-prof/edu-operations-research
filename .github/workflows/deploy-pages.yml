@@ -36,11 +36,11 @@ jobs:
       - name: Validate notebook JSON structure
         run: uv run python scripts/validate_notebooks.py
 
-      - name: Execute main Lab 02 notebook
-        run: uv run jupyter nbconvert --to notebook --execute --inplace 02-lab-transport-problem/lab_02_transport_problem.ipynb
+      - name: Check notebook role contracts
+        run: uv run python scripts/check_notebook_contracts.py
 
-      - name: Execute main Lab 03 notebook
-        run: uv run jupyter nbconvert --to notebook --execute --inplace 03-lab-duality-sensitivity/lab_03_duality_sensitivity.ipynb
+      - name: Execute worked examples
+        run: uv run python scripts/execute_worked_examples.py
 
       - name: Build Jupyter Book
         run: uv run jupyter-book build . --warningiserror

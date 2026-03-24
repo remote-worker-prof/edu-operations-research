@@ -1,68 +1,71 @@
 # edu-operations-research
 
-Публичный учебный репозиторий по исследованию операций с упором на понятные лабораторные работы, воспроизводимые ноутбуки и аккуратную публикацию материалов через GitHub Pages.
+Публичный учебный репозиторий по исследованию операций с упором на понятные лабораторные работы, разделение student notebooks и worked examples и аккуратную публикацию материалов через GitHub Pages.
 
-## Что здесь есть
+## Как теперь устроен курс
 
-- лабораторные работы в numbered-папках, которые остаются основным источником правды;
-- подробные теоретические заметки на русском языке;
-- Jupyter ноутбуки с пошаговыми объяснениями и проверкой решений через Python;
-- отдельный публикуемый сайт, который повторяет структуру репозитория и не скрывает исходные материалы.
+- В корне каждой лаборатории лежат только `student notebooks`.
+- В `examples-civil/` и `examples-military/` лежат полностью разобранные `worked examples`.
+- Сначала студент проходит теорию и свой student notebook, и только потом смотрит solved examples.
+- Бывшая линия `01.1` больше не живёт как отдельный раздел: её полезное содержимое встроено в гражданские примеры ЛР-01.
 
 ## Быстрый старт локально
 
 ```bash
 uv sync --group authoring --group docs
 uv run python scripts/validate_notebooks.py
-uv run jupyter nbconvert --to notebook --execute --inplace 02-lab-transport-problem/lab_02_transport_problem.ipynb
-uv run jupyter nbconvert --to notebook --execute --inplace 03-lab-duality-sensitivity/lab_03_duality_sensitivity.ipynb
+uv run python scripts/check_notebook_contracts.py
+uv run python scripts/execute_worked_examples.py
 uv run jupyter-book build . --warningiserror
 ```
 
 После сборки сайт лежит в `_build/html/index.html`.
 
-## Навигация
+## Как читать материалы
 
-- Репозиторий: `https://github.com/remote-worker-prof/edu-operations-research`
-- Сайт: `https://remote-worker-prof.github.io/edu-operations-research/`
+### ЛР-01. Основы линейного программирования
 
-### Опубликованные лабораторные
+- Теория: `01-lab-essentials/theory_linear_programming_for_beginners.md`
+- Student notebooks:
+  - `lab_01_student_civil_01.ipynb` — муниципальная пекарня
+  - `lab_01_student_civil_02.ipynb` — городской ремонтный участок
+  - `lab_01_student_military_01.ipynb` — комплектование полевых рационов
+  - `lab_01_student_military_02.ipynb` — ремонтно-обслуживающий склад
+- Worked examples:
+  - `examples-civil/` — 3 разобранных гражданских примера
+  - `examples-military/` — 3 разобранных военных примера
 
-| Статус | Раздел | Исходники | Страница |
-| --- | --- | --- | --- |
-| published | ЛР-01. Теория линейного программирования | [source](01-lab-essentials/theory_linear_programming_for_beginners.md) | [page](https://remote-worker-prof.github.io/edu-operations-research/01-lab-essentials/theory_linear_programming_for_beginners.html) |
-| published | ЛР-01. Основной ноутбук | [source](01-lab-essentials/lab_01_linear_programming.ipynb) | [page](https://remote-worker-prof.github.io/edu-operations-research/01-lab-essentials/lab_01_linear_programming.html) |
-| published | ЛР-01. Самостоятельная часть | [source](01-lab-essentials/lab_01_part2_independent.ipynb) | [page](https://remote-worker-prof.github.io/edu-operations-research/01-lab-essentials/lab_01_part2_independent.html) |
-| published | ЛР-01.1. Дополнительный прикладной кейс (supplementary applied case): fair-price audit | [source](01-lab-essentials/lab_01.1_corruption_detection_primal_dual.ipynb) | [page](https://remote-worker-prof.github.io/edu-operations-research/01-lab-essentials/lab_01.1_corruption_detection_primal_dual.html) |
-| published | ЛР-02. Транспортная задача: обзор | [source](02-lab-transport-problem/README.md) | [page](https://remote-worker-prof.github.io/edu-operations-research/02-lab-transport-problem/README.html) |
-| published | ЛР-02. Теория | [source](02-lab-transport-problem/theory_transport_problem.md) | [page](https://remote-worker-prof.github.io/edu-operations-research/02-lab-transport-problem/theory_transport_problem.html) |
-| published | ЛР-02. Основной ноутбук | [source](02-lab-transport-problem/lab_02_transport_problem.ipynb) | [page](https://remote-worker-prof.github.io/edu-operations-research/02-lab-transport-problem/lab_02_transport_problem.html) |
-| published | ЛР-02. Самостоятельные варианты | [source](02-lab-transport-problem/lab_02_part2_variants.ipynb) | [page](https://remote-worker-prof.github.io/edu-operations-research/02-lab-transport-problem/lab_02_part2_variants.html) |
-| published | ЛР-03. Двойственность и анализ чувствительности: обзор | [source](03-lab-duality-sensitivity/README.md) | [page](https://remote-worker-prof.github.io/edu-operations-research/03-lab-duality-sensitivity/README.html) |
-| published | ЛР-03. Теория | [source](03-lab-duality-sensitivity/theory_03_duality_sensitivity.md) | [page](https://remote-worker-prof.github.io/edu-operations-research/03-lab-duality-sensitivity/theory_03_duality_sensitivity.html) |
-| published | ЛР-03. Основной ноутбук | [source](03-lab-duality-sensitivity/lab_03_duality_sensitivity.ipynb) | [page](https://remote-worker-prof.github.io/edu-operations-research/03-lab-duality-sensitivity/lab_03_duality_sensitivity.html) |
-| published | ЛР-03. Самостоятельная часть | [source](03-lab-duality-sensitivity/lab_03_part2_independent.ipynb) | [page](https://remote-worker-prof.github.io/edu-operations-research/03-lab-duality-sensitivity/lab_03_part2_independent.html) |
+### ЛР-02. Транспортная задача
 
-## Как темы разведены
+- Теория: `02-lab-transport-problem/theory_transport_problem.md`
+- Student notebooks:
+  - `lab_02_student_civil_01.ipynb` — лекарства в районные больницы
+  - `lab_02_student_civil_02.ipynb` — школьное питание
+  - `lab_02_student_military_01.ipynb` — топливо для частей
+  - `lab_02_student_military_02.ipynb` — запчасти на ремонтные базы
+- Worked examples:
+  - `examples-civil/` — 3 разобранных гражданских транспортных примера
+  - `examples-military/` — 3 разобранных военных транспортных примера
 
-- **ЛР-01**: базовое ЛП, геометрия, канонизация, первый `linprog` и первое знакомство с двойственностью.
-- **ЛР-01.1**: дополнительный прикладной кейс (supplementary applied case) по госзакупкам, fair-price audit и primal-dual интерпретации.
-- **ЛР-02**: транспортная задача, баланс, фиктивные узлы и матрица перевозок.
-- **ЛР-03**: лабораторная с фокусом на анализ чувствительности (sensitivity-first): теневые цены (shadow prices), активные ограничения (binding), запас ресурса (slack) и сценарные изменения параметров.
+### ЛР-03. Двойственность и анализ чувствительности
 
-### Roadmap
+- Теория: `03-lab-duality-sensitivity/theory_03_duality_sensitivity.md`
+- Student notebooks:
+  - `lab_03_student_civil_01.ipynb` — муниципальное здравоохранение
+  - `lab_03_student_civil_02.ipynb` — социальная защита в зимний период
+  - `lab_03_student_military_01.ipynb` — бюджет логистической готовности
+  - `lab_03_student_military_02.ipynb` — модернизация ремонтной базы
+- Worked examples:
+  - `examples-civil/` — 3 разобранных гражданских sensitivity-примера
+  - `examples-military/` — 3 разобранных военных sensitivity-примера
 
-- Следующие лабораторные и прикладные кейсы попадают в публикацию только после отдельной проверки структуры, навигации и воспроизводимости ноутбуков.
+## Правила публикации
 
-## Структура проекта
-
-- `01-lab-essentials/` — завершённые материалы ЛР-01 и дополнительного прикладного кейса `01.1`.
-- `02-lab-transport-problem/` — новая ЛР-02 по транспортной задаче.
-- `03-lab-duality-sensitivity/` — полноценная ЛР-03 по двойственности и анализу чувствительности.
-- `.github/workflows/` — CI и публикация GitHub Pages.
-- `scripts/` — локальные утилиты проверки ноутбуков.
-- `PROJECT_INIT_PROMPT.md` — проектный prompt для инициализации и workflow-ограничений.
-- `agents-issue-workflow.cncf.yaml` — формула issue-driven процесса.
+- `student notebooks` публикуются раньше solved examples и остаются главным маршрутом для обучения.
+- `worked examples` тоже видны в основном TOC, но идут после student notebooks.
+- Контракт по ролям файлов простой:
+  - `_student_` в имени = notebook для заполнения студентом
+  - `_example_` в имени = полностью разобранный notebook
 
 ## Права на материалы
 
@@ -71,5 +74,3 @@ uv run jupyter-book build . --warningiserror
 - Любое копирование, адаптация, переработка, распространение, использование в курсах, корпоративных программах, публикациях и коммерческих или некоммерческих продуктах требует личного разрешения владельца.
 - Это правило относится ко всем ноутбукам, markdown-материалам, коду, схемам, таблицам, данным и сгенерированному сайту.
 - Подробности зафиксированы в [LICENSE.md](LICENSE.md) и [PERMISSIONS.md](PERMISSIONS.md).
-
-Если вам нужно разрешение на использование материалов, связывайтесь с владельцем репозитория через GitHub-профиль `remote-worker-prof`.
