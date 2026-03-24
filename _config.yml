@@ -1,0 +1,52 @@
+title: Edu Operations Research
+author: remote-worker-prof
+copyright: "2026"
+language: ru
+only_build_toc_files: true
+
+execute:
+  execute_notebooks: off
+
+parse:
+  myst_enable_extensions:
+    - colon_fence
+    - linkify
+
+repository:
+  url: https://github.com/remote-worker-prof/edu-operations-research
+  path_to_book: .
+  branch: main
+
+html:
+  use_repository_button: true
+  use_issues_button: true
+  use_edit_page_button: false
+  home_page_in_navbar: true
+  extra_navbar: >
+    <p><strong>Внимание:</strong> материалы открыты только для чтения.
+    Любое копирование и переиспользование требует личного разрешения автора.</p>
+  extra_footer: >
+    <p>Все права защищены. Репозиторий открыт для просмотра, но не лицензирован для
+    свободного копирования, переработки или повторной публикации.</p>
+
+sphinx:
+  config:
+    language: ru
+    html_baseurl: https://remote-worker-prof.github.io/edu-operations-research/
+
+exclude_patterns:
+  - .beads/**
+  - .serena/**
+  - .venv/**
+  - _build/**
+  - .jupyter_cache/**
+  - 03-lab-duality-sensitivity/**
+  - AGENTS.md
+  - LICENSE.md
+  - PERMISSIONS.md
+  - PROJECT_INIT_PROMPT.md
+  - README.md
+  - agents-issue-workflow.cncf.yaml
+  - pyproject.toml
+  - scripts/**
+  - uv.lock
