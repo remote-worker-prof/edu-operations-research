@@ -39,6 +39,9 @@ jobs:
       - name: Execute main Lab 02 notebook
         run: uv run jupyter nbconvert --to notebook --execute --inplace 02-lab-transport-problem/lab_02_transport_problem.ipynb
 
+      - name: Execute main Lab 03 notebook
+        run: uv run jupyter nbconvert --to notebook --execute --inplace 03-lab-duality-sensitivity/lab_03_duality_sensitivity.ipynb
+
       - name: Build Jupyter Book
         run: uv run jupyter-book build . --warningiserror
 

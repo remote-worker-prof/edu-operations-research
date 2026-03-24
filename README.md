@@ -15,6 +15,7 @@
 uv sync --group authoring --group docs
 uv run python scripts/validate_notebooks.py
 uv run jupyter nbconvert --to notebook --execute --inplace 02-lab-transport-problem/lab_02_transport_problem.ipynb
+uv run jupyter nbconvert --to notebook --execute --inplace 03-lab-duality-sensitivity/lab_03_duality_sensitivity.ipynb
 uv run jupyter-book build . --warningiserror
 ```
 
@@ -32,22 +33,32 @@ uv run jupyter-book build . --warningiserror
 | published | ЛР-01. Теория линейного программирования | [source](01-lab-essentials/theory_linear_programming_for_beginners.md) | [page](https://remote-worker-prof.github.io/edu-operations-research/01-lab-essentials/theory_linear_programming_for_beginners.html) |
 | published | ЛР-01. Основной ноутбук | [source](01-lab-essentials/lab_01_linear_programming.ipynb) | [page](https://remote-worker-prof.github.io/edu-operations-research/01-lab-essentials/lab_01_linear_programming.html) |
 | published | ЛР-01. Самостоятельная часть | [source](01-lab-essentials/lab_01_part2_independent.ipynb) | [page](https://remote-worker-prof.github.io/edu-operations-research/01-lab-essentials/lab_01_part2_independent.html) |
-| published | ЛР-01.1. Applied primal-dual кейс | [source](01-lab-essentials/lab_01.1_corruption_detection_primal_dual.ipynb) | [page](https://remote-worker-prof.github.io/edu-operations-research/01-lab-essentials/lab_01.1_corruption_detection_primal_dual.html) |
+| published | ЛР-01.1. Supplementary applied case: fair-price audit | [source](01-lab-essentials/lab_01.1_corruption_detection_primal_dual.ipynb) | [page](https://remote-worker-prof.github.io/edu-operations-research/01-lab-essentials/lab_01.1_corruption_detection_primal_dual.html) |
 | published | ЛР-02. Транспортная задача: обзор | [source](02-lab-transport-problem/README.md) | [page](https://remote-worker-prof.github.io/edu-operations-research/02-lab-transport-problem/README.html) |
 | published | ЛР-02. Теория | [source](02-lab-transport-problem/theory_transport_problem.md) | [page](https://remote-worker-prof.github.io/edu-operations-research/02-lab-transport-problem/theory_transport_problem.html) |
 | published | ЛР-02. Основной ноутбук | [source](02-lab-transport-problem/lab_02_transport_problem.ipynb) | [page](https://remote-worker-prof.github.io/edu-operations-research/02-lab-transport-problem/lab_02_transport_problem.html) |
 | published | ЛР-02. Самостоятельные варианты | [source](02-lab-transport-problem/lab_02_part2_variants.ipynb) | [page](https://remote-worker-prof.github.io/edu-operations-research/02-lab-transport-problem/lab_02_part2_variants.html) |
+| published | ЛР-03. Двойственность и анализ чувствительности: обзор | [source](03-lab-duality-sensitivity/README.md) | [page](https://remote-worker-prof.github.io/edu-operations-research/03-lab-duality-sensitivity/README.html) |
+| published | ЛР-03. Теория | [source](03-lab-duality-sensitivity/theory_03_duality_sensitivity.md) | [page](https://remote-worker-prof.github.io/edu-operations-research/03-lab-duality-sensitivity/theory_03_duality_sensitivity.html) |
+| published | ЛР-03. Основной ноутбук | [source](03-lab-duality-sensitivity/lab_03_duality_sensitivity.ipynb) | [page](https://remote-worker-prof.github.io/edu-operations-research/03-lab-duality-sensitivity/lab_03_duality_sensitivity.html) |
+| published | ЛР-03. Самостоятельная часть | [source](03-lab-duality-sensitivity/lab_03_part2_independent.ipynb) | [page](https://remote-worker-prof.github.io/edu-operations-research/03-lab-duality-sensitivity/lab_03_part2_independent.html) |
+
+## Как темы разведены
+
+- **ЛР-01**: базовое ЛП, геометрия, канонизация, первый `linprog`, вводная dual/KKT-логика.
+- **ЛР-01.1**: supplementary applied case по fair-price audit и primal-dual интерпретации в госзакупках.
+- **ЛР-02**: транспортная задача, баланс, фиктивные узлы и матрица перевозок.
+- **ЛР-03**: sensitivity-first лабораторная про shadow prices, `binding/slack`, сильную двойственность как проверку и сценарные изменения параметров.
 
 ### Roadmap
 
-- `03-lab-duality-sensitivity/` зарезервирована под будущую ЛР-03 по двойственности и анализу чувствительности.
-- Draft-материалы будущих лабораторных хранятся в репозитории, но не публикуются как завершённые разделы сайта, пока не попадут в основной table of contents.
+- Следующие лабораторные и прикладные кейсы попадают в публикацию только после отдельной проверки структуры, навигации и воспроизводимости ноутбуков.
 
 ## Структура проекта
 
-- `01-lab-essentials/` — завершённые материалы ЛР-01 и applied-расширение 01.1.
+- `01-lab-essentials/` — завершённые материалы ЛР-01 и supplementary applied case `01.1`.
 - `02-lab-transport-problem/` — новая ЛР-02 по транспортной задаче.
-- `03-lab-duality-sensitivity/` — черновик будущей ЛР-03.
+- `03-lab-duality-sensitivity/` — полноценная ЛР-03 по двойственности и анализу чувствительности.
 - `.github/workflows/` — CI и публикация GitHub Pages.
 - `scripts/` — локальные утилиты проверки ноутбуков.
 - `PROJECT_INIT_PROMPT.md` — проектный prompt для инициализации и workflow-ограничений.

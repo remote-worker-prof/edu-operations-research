@@ -16,12 +16,16 @@
 ## Текущая структура
 
 - **ЛР-01**: основы линейного программирования, геометрический и программный подход.
-- **ЛР-01.1**: прикладной primal-dual кейс по госзакупкам и приоритизации проверки.
+- **ЛР-01.1**: supplementary applied case по госзакупкам, fair-price audit и primal-dual интерпретации.
 - **ЛР-02**: транспортная задача, баланс спроса и предложения, фиктивные узлы и проверка через `scipy.optimize.linprog`.
+- **ЛР-03**: двойственность и анализ чувствительности в задаче распределения публичного бюджета.
 
-## Roadmap
+## Как лабораторные не повторяют друг друга
 
-- **ЛР-03 (draft)**: двойственность и анализ чувствительности. Черновые материалы уже есть в репозитории, но ещё не входят в опубликованную основную навигацию.
+- **ЛР-01** учит строить базовую модель ЛП и решать её геометрически.
+- **ЛР-02** переводит акцент на потоковую транспортную структуру и баланс.
+- **ЛР-03** разбирает дефицитность ресурсов, shadow prices и изменения оптимума при сдвиге параметров.
+- **ЛР-01.1** не является отдельной основной лабораторной и публикуется как supplementary applied case.
 
 ## Локальная сборка
 
@@ -29,6 +33,7 @@
 uv sync --group authoring --group docs
 uv run python scripts/validate_notebooks.py
 uv run jupyter nbconvert --to notebook --execute --inplace 02-lab-transport-problem/lab_02_transport_problem.ipynb
+uv run jupyter nbconvert --to notebook --execute --inplace 03-lab-duality-sensitivity/lab_03_duality_sensitivity.ipynb
 uv run jupyter-book build . --warningiserror
 ```
 

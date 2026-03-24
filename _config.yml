@@ -40,7 +40,6 @@ exclude_patterns:
   - .venv/**
   - _build/**
   - .jupyter_cache/**
-  - 03-lab-duality-sensitivity/**
   - AGENTS.md
   - LICENSE.md
   - PERMISSIONS.md

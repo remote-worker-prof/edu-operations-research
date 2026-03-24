@@ -11,7 +11,7 @@ parts:
       - file: 01-lab-essentials/lab_01_part2_independent
         title: Самостоятельная часть ЛР-01
       - file: 01-lab-essentials/lab_01.1_corruption_detection_primal_dual
-        title: Applied primal-dual кейс
+        title: "Supplementary applied case: fair-price audit"
 
   - caption: ЛР-02. Транспортная задача
     chapters:
@@ -23,3 +23,14 @@ parts:
         title: Основной ноутбук ЛР-02
       - file: 02-lab-transport-problem/lab_02_part2_variants
         title: Самостоятельные варианты ЛР-02
+
+  - caption: ЛР-03. Двойственность и анализ чувствительности
+    chapters:
+      - file: 03-lab-duality-sensitivity/README
+        title: Обзор ЛР-03
+      - file: 03-lab-duality-sensitivity/theory_03_duality_sensitivity
+        title: Теория ЛР-03
+      - file: 03-lab-duality-sensitivity/lab_03_duality_sensitivity
+        title: Основной ноутбук ЛР-03
+      - file: 03-lab-duality-sensitivity/lab_03_part2_independent
+        title: Самостоятельная часть ЛР-03
