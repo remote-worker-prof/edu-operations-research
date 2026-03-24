@@ -9,6 +9,8 @@ execute:
 
 parse:
   myst_enable_extensions:
+    - dollarmath
+    - amsmath
     - colon_fence
     - linkify
 
@@ -32,6 +34,7 @@ html:
 sphinx:
   config:
     extensions:
+      - sphinx.ext.mathjax
       - sphinx_togglebutton
       - sphinx_copybutton
       - myst_nb
