@@ -58,7 +58,7 @@ Minimum workflow:
 1. Analyze the project through Serena.
 2. Create or claim the related Beads issue with prefix `eor-`.
 3. Implement the lab materials and update site/repo navigation if needed.
-4. Validate notebooks, build the Jupyter Book site, and review git status.
+4. Validate notebooks, run a clean Jupyter Book build, and review git status.
 5. Close the issue when the work is complete.
 
 ## Commit Format
@@ -76,5 +76,8 @@ uv sync --group authoring --group docs
 uv run python scripts/validate_notebooks.py
 uv run python scripts/check_notebook_contracts.py
 uv run python scripts/execute_worked_examples.py
-uv run jupyter-book build . --warningiserror
+uv run jupyter-book clean . --all
+uv run jupyter-book build . --all --warningiserror
 ```
+
+Use the clean build before local smoke-tests or Playwright checks so `_build/html` does not keep stale pages from removed notebooks.

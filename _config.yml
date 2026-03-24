@@ -31,8 +31,19 @@ html:
 
 sphinx:
   config:
+    extensions:
+      - sphinx_togglebutton
+      - sphinx_copybutton
+      - myst_nb
+      - jupyter_book
+      - sphinx_comments
+      - sphinx_external_toc
+      - sphinx.ext.intersphinx
+      - sphinx_design
+      - sphinx_book_theme
     language: ru
     html_baseurl: https://remote-worker-prof.github.io/edu-operations-research/
+    html_favicon: _static/favicon.svg
 
 exclude_patterns:
   - .beads/**
@@ -49,3 +60,4 @@ exclude_patterns:
   - pyproject.toml
   - scripts/**
   - uv.lock
+  - "**/eor-issue.md"

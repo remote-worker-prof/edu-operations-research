@@ -34,8 +34,11 @@ uv sync --group authoring --group docs
 uv run python scripts/validate_notebooks.py
 uv run python scripts/check_notebook_contracts.py
 uv run python scripts/execute_worked_examples.py
-uv run jupyter-book build . --warningiserror
+uv run jupyter-book clean . --all
+uv run jupyter-book build . --all --warningiserror
 ```
+
+Для локального smoke-test и Playwright-проверок используйте именно clean build, чтобы `_build/html` не содержал stale-страницы от удалённых notebook-ов.
 
 ## Важно о правах
 

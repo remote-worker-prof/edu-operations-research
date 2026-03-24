@@ -16,10 +16,11 @@ uv sync --group authoring --group docs
 uv run python scripts/validate_notebooks.py
 uv run python scripts/check_notebook_contracts.py
 uv run python scripts/execute_worked_examples.py
-uv run jupyter-book build . --warningiserror
+uv run jupyter-book clean . --all
+uv run jupyter-book build . --all --warningiserror
 ```
 
-После сборки сайт лежит в `_build/html/index.html`.
+После clean build сайт лежит в `_build/html/index.html`. Для локального smoke-test и Playwright-проверок используйте именно чистую сборку, а не накопленный `_build/html` от прошлых запусков.
 
 ## Как читать материалы
 

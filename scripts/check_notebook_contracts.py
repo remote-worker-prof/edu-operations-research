@@ -1,21 +1,23 @@
 """Проверяет ролевой контракт учебных notebook-ов после реструктуризации.
 
-Идея простая: в корне каждой лаборатории должны лежать только student notebooks,
-а полностью разобранные worked examples должны жить только в
-`examples-civil/` и `examples-military/`.
+Идея простая: в корне каждой опубликованной лаборатории должны лежать только
+student notebooks, а полностью разобранные worked examples должны жить только
+в `examples-civil/` и `examples-military/`.
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 from pathlib import Path
+import re
 import warnings
 
 import nbformat
 from nbformat.warnings import MissingIDFieldWarning
+import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
+TOC_PATH = ROOT / "_toc.yml"
 EXCLUDED_PARTS = {
     ".beads",
     ".git",
@@ -25,20 +27,10 @@ EXCLUDED_PARTS = {
     ".venv",
     "_build",
 }
-
-
-@dataclass(frozen=True)
-class LabSpec:
-    root: str
-    student_count: int = 4
-    example_count_per_track: int = 3
-
-
-LAB_SPECS = (
-    LabSpec("01-lab-essentials"),
-    LabSpec("02-lab-transport-problem"),
-    LabSpec("03-lab-duality-sensitivity"),
-)
+LAB_ROOT_PATTERN = re.compile(r"^\d{2}-")
+STUDENT_COUNT = 4
+EXAMPLE_COUNT_PER_TRACK = 3
+EXPECTED_STUDENT_SPLIT = 2
 
 
 def is_excluded(path: Path) -> bool:
@@ -79,25 +71,62 @@ def iter_notebooks(path: Path) -> list[Path]:
     return sorted(paths)
 
 
+def iter_toc_files(node: object) -> list[Path]:
+    """Достаёт все `file:` записи из `_toc.yml`."""
+
+    files: list[Path] = []
+    if isinstance(node, dict):
+        file_name = node.get("file")
+        if isinstance(file_name, str):
+            files.append(Path(file_name))
+        for value in node.values():
+            files.extend(iter_toc_files(value))
+    elif isinstance(node, list):
+        for item in node:
+            files.extend(iter_toc_files(item))
+    return files
+
+
+def discover_published_lab_roots() -> list[Path]:
+    """Находит опубликованные numbered labs через `_toc.yml`."""
+
+    with TOC_PATH.open("r", encoding="utf-8") as handle:
+        toc = yaml.safe_load(handle)
+
+    lab_roots = {
+        Path(file_path.parts[0])
+        for file_path in iter_toc_files(toc)
+        if len(file_path.parts) >= 2 and LAB_ROOT_PATTERN.match(file_path.parts[0])
+    }
+    return sorted(lab_roots)
+
+
 def main() -> None:
     """Проверяет, что структура notebook-ов совпадает с учебным контрактом."""
 
     warnings.filterwarnings("ignore", category=MissingIDFieldWarning)
 
     errors: list[str] = []
-    checked: list[Path] = []
+    lab_roots = discover_published_lab_roots()
+    if not lab_roots:
+        raise SystemExit("No published numbered lab roots found in _toc.yml.")
 
-    for spec in LAB_SPECS:
-        lab_root = ROOT / spec.root
+    for relative_lab_root in lab_roots:
+        lab_root = ROOT / relative_lab_root
+        checked: list[Path] = []
+        if not lab_root.is_dir():
+            errors.append(f"{relative_lab_root} is listed in _toc.yml but is not a directory.")
+            continue
+
         root_notebooks = sorted(
             path
             for path in lab_root.glob("*.ipynb")
             if not is_excluded(path)
         )
 
-        if len(root_notebooks) != spec.student_count:
+        if len(root_notebooks) != STUDENT_COUNT:
             errors.append(
-                f"{spec.root}: expected {spec.student_count} student notebooks in root, "
+                f"{relative_lab_root}: expected {STUDENT_COUNT} student notebooks in root, "
                 f"found {len(root_notebooks)}."
             )
 
@@ -121,11 +150,15 @@ def main() -> None:
                     f"{path.relative_to(ROOT)} must contain a 'Student notebook:' marker."
                 )
 
-        if civil_students != 2:
-            errors.append(f"{spec.root}: expected 2 civil student notebooks, found {civil_students}.")
-        if military_students != 2:
+        if civil_students != EXPECTED_STUDENT_SPLIT:
             errors.append(
-                f"{spec.root}: expected 2 military student notebooks, found {military_students}."
+                f"{relative_lab_root}: expected {EXPECTED_STUDENT_SPLIT} civil student notebooks, "
+                f"found {civil_students}."
+            )
+        if military_students != EXPECTED_STUDENT_SPLIT:
+            errors.append(
+                f"{relative_lab_root}: expected {EXPECTED_STUDENT_SPLIT} military student notebooks, "
+                f"found {military_students}."
             )
 
         for track in ("examples-civil", "examples-military"):
@@ -136,10 +169,10 @@ def main() -> None:
                 if not is_excluded(path)
             )
 
-            if len(example_notebooks) != spec.example_count_per_track:
+            if len(example_notebooks) != EXAMPLE_COUNT_PER_TRACK:
                 errors.append(
                     f"{examples_dir.relative_to(ROOT)}: expected "
-                    f"{spec.example_count_per_track} worked examples, "
+                    f"{EXAMPLE_COUNT_PER_TRACK} worked examples, "
                     f"found {len(example_notebooks)}."
                 )
 
@@ -160,14 +193,16 @@ def main() -> None:
         unexpected = sorted(set(iter_notebooks(lab_root)) - set(checked))
         for path in unexpected:
             errors.append(
-                f"{path.relative_to(ROOT)} is outside the allowed notebook layout for {spec.root}."
+                f"{path.relative_to(ROOT)} is outside the allowed notebook layout for "
+                f"{relative_lab_root}."
             )
 
     if errors:
         raise SystemExit("\n".join(errors))
 
-    for path in sorted(checked):
-        print(f"contract-ok: {path.relative_to(ROOT)}")
+    for relative_lab_root in lab_roots:
+        for path in sorted(iter_notebooks(ROOT / relative_lab_root)):
+            print(f"contract-ok: {path.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":
