@@ -60,6 +60,18 @@ uv run jupyter-book build . --all --warningiserror
   - `examples-civil/` — 3 разобранных гражданских sensitivity-примера
   - `examples-military/` — 3 разобранных военных sensitivity-примера
 
+### ЛР-04. Задача о назначениях
+
+- Теория: `04-lab-assignment-problem/theory_04_assignment_problem.md`
+- Student notebooks:
+  - `lab_04_student_civil_01.ipynb` — выездные бригады по районам
+  - `lab_04_student_civil_02.ipynb` — преподаватели по учебным группам
+  - `lab_04_student_military_01.ipynb` — ремонтные бригады по единицам техники
+  - `lab_04_student_military_02.ipynb` — экипажи по задачам вылета
+- Worked examples:
+  - `examples-civil/` — 3 разобранных гражданских assignment-примера
+  - `examples-military/` — 3 разобранных военных assignment-примера
+
 ## Правила публикации
 
 - `student notebooks` публикуются раньше solved examples и остаются главным маршрутом для обучения.

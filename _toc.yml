@@ -100,3 +100,36 @@ parts:
             title: Example military 02
           - file: 03-lab-duality-sensitivity/examples-military/lab_03_example_military_03
             title: Example military 03
+
+  - caption: ЛР-04. Задача о назначениях
+    chapters:
+      - file: 04-lab-assignment-problem/README
+        title: Обзор ЛР-04
+      - file: 04-lab-assignment-problem/theory_04_assignment_problem
+        title: Теория ЛР-04
+      - file: 04-lab-assignment-problem/lab_04_student_civil_01
+        title: "Student notebook: civil 01"
+      - file: 04-lab-assignment-problem/lab_04_student_civil_02
+        title: "Student notebook: civil 02"
+      - file: 04-lab-assignment-problem/lab_04_student_military_01
+        title: "Student notebook: military 01"
+      - file: 04-lab-assignment-problem/lab_04_student_military_02
+        title: "Student notebook: military 02"
+      - file: 04-lab-assignment-problem/examples-civil/README
+        title: Разобранные гражданские примеры ЛР-04
+        sections:
+          - file: 04-lab-assignment-problem/examples-civil/lab_04_example_civil_01
+            title: Example civil 01
+          - file: 04-lab-assignment-problem/examples-civil/lab_04_example_civil_02
+            title: Example civil 02
+          - file: 04-lab-assignment-problem/examples-civil/lab_04_example_civil_03
+            title: Example civil 03
+      - file: 04-lab-assignment-problem/examples-military/README
+        title: Разобранные военные примеры ЛР-04
+        sections:
+          - file: 04-lab-assignment-problem/examples-military/lab_04_example_military_01
+            title: Example military 01
+          - file: 04-lab-assignment-problem/examples-military/lab_04_example_military_02
+            title: Example military 02
+          - file: 04-lab-assignment-problem/examples-military/lab_04_example_military_03
+            title: Example military 03
