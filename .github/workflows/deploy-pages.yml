@@ -39,6 +39,9 @@ jobs:
       - name: Check notebook role contracts
         run: uv run python scripts/check_notebook_contracts.py
 
+      - name: Check Lab 02 transport notebook contract
+        run: uv run python scripts/check_lab02_transport_contract.py
+
       - name: Execute worked examples
         run: uv run python scripts/execute_worked_examples.py
 
