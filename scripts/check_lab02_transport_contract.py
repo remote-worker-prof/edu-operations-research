@@ -1,14 +1,14 @@
-"""Checks the educational code contract for Lab 02 transport notebooks.
+"""Проверяет учебный контракт транспортных notebook-ов ЛР-02.
 
-The check is intentionally narrow: it protects the transport-problem notebooks
-after the LP theory was expanded, without forcing the same code style on other
-laboratory works.
+Проверка намеренно узкая: она защищает notebook-и транспортной задачи после
+расширения LP-теории, но не навязывает тот же стиль другим лабораторным.
 """
 
 from __future__ import annotations
 
 import ast
 from pathlib import Path
+import re
 import warnings
 
 import nbformat
@@ -21,54 +21,184 @@ MAX_CODE_LINE_LENGTH = 100
 
 EXPECTED_DATA = {
     "examples-civil/lab_02_example_civil_01.ipynb": {
-        "supplies": [35, 50, 40],
-        "demands": [20, 30, 25, 50],
-        "costs": [[4, 6, 8, 13], [5, 4, 7, 9], [6, 3, 4, 7]],
+        "supplies": [
+            35,
+            50,
+            40,
+        ],
+        "demands": [
+            20,
+            30,
+            25,
+            50,
+        ],
+        "costs": [
+            [4, 6, 8, 13],
+            [5, 4, 7, 9],
+            [6, 3, 4, 7],
+        ],
     },
     "examples-civil/lab_02_example_civil_02.ipynb": {
-        "supplies": [25, 45, 35],
-        "demands": [15, 30, 25, 35],
-        "costs": [[4, 8, 50, 9], [6, 5, 7, 8], [7, 4, 6, 5]],
+        "supplies": [
+            25,
+            45,
+            35,
+        ],
+        "demands": [
+            15,
+            30,
+            25,
+            35,
+        ],
+        "costs": [
+            [4, 8, 50, 9],
+            [6, 5, 7, 8],
+            [7, 4, 6, 5],
+        ],
     },
     "examples-civil/lab_02_example_civil_03.ipynb": {
-        "supplies": [28, 32, 25],
-        "demands": [18, 22, 20, 15],
-        "costs": [[4, 5, 7, 8], [6, 4, 5, 7], [7, 6, 4, 6]],
+        "supplies": [
+            28,
+            32,
+            25,
+        ],
+        "demands": [
+            18,
+            22,
+            20,
+            15,
+        ],
+        "costs": [
+            [4, 5, 7, 8],
+            [6, 4, 5, 7],
+            [7, 6, 4, 6],
+        ],
     },
     "examples-military/lab_02_example_military_01.ipynb": {
-        "supplies": [24, 30, 26],
-        "demands": [18, 20, 16, 26],
-        "costs": [[5, 6, 8, 9], [4, 5, 7, 8], [7, 5, 4, 6]],
+        "supplies": [
+            24,
+            30,
+            26,
+        ],
+        "demands": [
+            18,
+            20,
+            16,
+            26,
+        ],
+        "costs": [
+            [5, 6, 8, 9],
+            [4, 5, 7, 8],
+            [7, 5, 4, 6],
+        ],
     },
     "examples-military/lab_02_example_military_02.ipynb": {
-        "supplies": [42, 28, 20],
-        "demands": [20, 18, 16, 14],
-        "costs": [[4, 7, 8, 9], [5, 4, 6, 7], [7, 6, 4, 5]],
+        "supplies": [
+            42,
+            28,
+            20,
+        ],
+        "demands": [
+            20,
+            18,
+            16,
+            14,
+        ],
+        "costs": [
+            [4, 7, 8, 9],
+            [5, 4, 6, 7],
+            [7, 6, 4, 5],
+        ],
     },
     "examples-military/lab_02_example_military_03.ipynb": {
-        "supplies": [18, 24, 20],
-        "demands": [14, 18, 16, 22],
-        "costs": [[6, 5, 8, 10], [5, 4, 6, 7], [7, 6, 5, 6]],
+        "supplies": [
+            18,
+            24,
+            20,
+        ],
+        "demands": [
+            14,
+            18,
+            16,
+            22,
+        ],
+        "costs": [
+            [6, 5, 8, 10],
+            [5, 4, 6, 7],
+            [7, 6, 5, 6],
+        ],
     },
     "lab_02_student_civil_01.ipynb": {
-        "supplies": [30, 40, 35],
-        "demands": [20, 25, 30, 30],
-        "costs": [[5, 7, 6, 10], [8, 4, 5, 7], [6, 6, 4, 5]],
+        "supplies": [
+            30,
+            40,
+            35,
+        ],
+        "demands": [
+            20,
+            25,
+            30,
+            30,
+        ],
+        "costs": [
+            [5, 7, 6, 10],
+            [8, 4, 5, 7],
+            [6, 6, 4, 5],
+        ],
     },
     "lab_02_student_civil_02.ipynb": {
-        "supplies": [40, 35, 30],
-        "demands": [20, 25, 30, 15],
-        "costs": [[4, 6, 8, 7], [5, 4, 7, 6], [6, 5, 4, 8]],
+        "supplies": [
+            40,
+            35,
+            30,
+        ],
+        "demands": [
+            20,
+            25,
+            30,
+            15,
+        ],
+        "costs": [
+            [4, 6, 8, 7],
+            [5, 4, 7, 6],
+            [6, 5, 4, 8],
+        ],
     },
     "lab_02_student_military_01.ipynb": {
-        "supplies": [50, 40, 35],
-        "demands": [30, 25, 35, 35],
-        "costs": [[6, 7, 9, 12], [5, 4, 8, 10], [8, 6, 5, 7]],
+        "supplies": [
+            50,
+            40,
+            35,
+        ],
+        "demands": [
+            30,
+            25,
+            35,
+            35,
+        ],
+        "costs": [
+            [6, 7, 9, 12],
+            [5, 4, 8, 10],
+            [8, 6, 5, 7],
+        ],
     },
     "lab_02_student_military_02.ipynb": {
-        "supplies": [25, 30, 20],
-        "demands": [15, 20, 18, 30],
-        "costs": [[7, 5, 9, 11], [6, 4, 7, 8], [8, 6, 5, 7]],
+        "supplies": [
+            25,
+            30,
+            20,
+        ],
+        "demands": [
+            15,
+            20,
+            18,
+            30,
+        ],
+        "costs": [
+            [7, 5, 9, 11],
+            [6, 4, 7, 8],
+            [8, 6, 5, 7],
+        ],
     },
 }
 
@@ -86,15 +216,37 @@ WORKED_MARKERS = (
     "make_plan_frame",
     "make_used_routes_frame",
     "make_balance_check_frames",
-    "Args:",
-    "Returns:",
+    "Аргументы:",
+    "Возвращает:",
+    "Исключения:",
     "display(",
     "np.allclose",
 )
 
+FORBIDDEN_ENGLISH_DOCSTRING_SECTIONS = (
+    "Args:",
+    "Returns:",
+    "Raises:",
+)
+
+FORBIDDEN_ENGLISH_COMMENTS = (
+    "# Step ",
+    "# Hint:",
+    "task statement",
+    "readable form",
+    "solve only after",
+)
+
+ARRAY_ASSIGNMENT_PATTERN = re.compile(
+    r"(?P<name>supplies|demands|costs) = np\.array\(\n"
+    r"(?P<body>.*?)"
+    r"\n\)",
+    flags=re.DOTALL,
+)
+
 
 def read_notebook(path: Path) -> nbformat.NotebookNode:
-    """Reads and schema-validates one notebook."""
+    """Читает один notebook и проверяет его JSON-схему."""
 
     with path.open("r", encoding="utf-8") as handle:
         notebook = nbformat.read(handle, as_version=4)
@@ -103,13 +255,13 @@ def read_notebook(path: Path) -> nbformat.NotebookNode:
 
 
 def notebook_source(notebook: nbformat.NotebookNode) -> str:
-    """Combines all cell sources into one searchable string."""
+    """Объединяет исходники всех ячеек в одну строку для поиска."""
 
     return "\n".join("".join(cell.source) for cell in notebook.cells)
 
 
 def code_sources(notebook: nbformat.NotebookNode) -> list[str]:
-    """Returns source strings from code cells only."""
+    """Возвращает исходники только code cells."""
 
     return [
         "".join(cell.source)
@@ -119,7 +271,7 @@ def code_sources(notebook: nbformat.NotebookNode) -> list[str]:
 
 
 def parse_code_cell(source: str, relative_path: Path, cell_index: int) -> ast.Module:
-    """Parses a code cell and reports notebook location on syntax errors."""
+    """Разбирает code cell и указывает notebook при синтаксической ошибке."""
 
     try:
         return ast.parse(source)
@@ -130,7 +282,7 @@ def parse_code_cell(source: str, relative_path: Path, cell_index: int) -> ast.Mo
 
 
 def literal_np_array(node: ast.AST) -> object | None:
-    """Extracts the first argument from a simple ``np.array([...])`` call."""
+    """Достает первый аргумент из простого вызова ``np.array([...])``."""
 
     if not isinstance(node, ast.Call):
         return None
@@ -145,7 +297,7 @@ def extract_numeric_statement(
     notebook: nbformat.NotebookNode,
     relative_path: Path,
 ) -> dict[str, object]:
-    """Extracts original ``supplies``, ``demands``, and ``costs`` arrays."""
+    """Достает исходные массивы ``supplies``, ``demands`` и ``costs``."""
 
     extracted: dict[str, object] = {}
     wanted_names = {"supplies", "demands", "costs"}
@@ -174,7 +326,7 @@ def has_uncommented_call(
     relative_path: Path,
     call_name: str,
 ) -> bool:
-    """Checks whether code cells call a function outside comments."""
+    """Проверяет, вызывается ли функция вне комментариев."""
 
     for cell_index, source in enumerate(code_sources(notebook)):
         tree = parse_code_cell(source, relative_path, cell_index)
@@ -191,7 +343,7 @@ def check_code_style(
     relative_path: Path,
     errors: list[str],
 ) -> None:
-    """Checks simple readability rules for notebook code cells."""
+    """Проверяет простые правила читаемости code cells."""
 
     for cell_index, source in enumerate(code_sources(notebook)):
         parse_code_cell(source, relative_path, cell_index)
@@ -208,12 +360,129 @@ def check_code_style(
                 )
 
 
+def check_russian_docstrings(
+    notebook: nbformat.NotebookNode,
+    relative_path: Path,
+    errors: list[str],
+) -> None:
+    """Проверяет русские Google-style секции в docstrings функций ЛР-02."""
+
+    for cell_index, source in enumerate(code_sources(notebook)):
+        tree = parse_code_cell(source, relative_path, cell_index)
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.FunctionDef):
+                continue
+
+            docstring = ast.get_docstring(node) or ""
+            if not docstring:
+                errors.append(
+                    f"{relative_path} code cell {cell_index}: "
+                    f"function {node.name!r} must have a Russian docstring."
+                )
+                continue
+
+            for section in FORBIDDEN_ENGLISH_DOCSTRING_SECTIONS:
+                if section in docstring:
+                    errors.append(
+                        f"{relative_path} code cell {cell_index}: "
+                        f"function {node.name!r} uses English docstring "
+                        f"section {section!r}."
+                    )
+
+            for section in ("Аргументы:", "Возвращает:"):
+                if section not in docstring:
+                    errors.append(
+                        f"{relative_path} code cell {cell_index}: "
+                        f"function {node.name!r} misses Russian section "
+                        f"{section!r}."
+                    )
+
+            if node.name == "solve_transport_problem" and "Исключения:" not in docstring:
+                errors.append(
+                    f"{relative_path} code cell {cell_index}: "
+                    "solve_transport_problem must document 'Исключения:'."
+                )
+
+
+def check_russian_comments(source: str, relative_path: Path, errors: list[str]) -> None:
+    """Не дает вернуть английские учебные комментарии в ЛР-02."""
+
+    for fragment in FORBIDDEN_ENGLISH_COMMENTS:
+        if fragment in source:
+            errors.append(
+                f"{relative_path}: code comments still contain English fragment "
+                f"{fragment!r}."
+            )
+
+
+def check_array_formatting(
+    source: str,
+    relative_path: Path,
+    expected: dict[str, object],
+    errors: list[str],
+) -> None:
+    """Проверяет многострочное форматирование векторов и матрицы затрат."""
+
+    matches = {
+        match.group("name"): match.group("body").splitlines()
+        for match in ARRAY_ASSIGNMENT_PATTERN.finditer(source)
+    }
+
+    for name in ("supplies", "demands", "costs"):
+        lines = matches.get(name)
+        if lines is None:
+            errors.append(f"{relative_path}: missing formatted {name} np.array block.")
+            continue
+
+        if not lines or lines[0] != "    [":
+            errors.append(
+                f"{relative_path}: {name} must open with an indented '[' line."
+            )
+        if len(lines) < 3 or lines[-1] != "    dtype=float,":
+            errors.append(
+                f"{relative_path}: {name} must keep dtype=float on its own "
+                "indented line."
+            )
+        if len(lines) < 2 or lines[-2] != "    ],":
+            errors.append(f"{relative_path}: {name} np.array block is malformed.")
+
+        value_lines = lines[1:-2]
+        if name == "costs":
+            expected_rows = expected["costs"]
+            row_lines = [line for line in value_lines if line.strip()]
+            if len(row_lines) != len(expected_rows):
+                errors.append(
+                    f"{relative_path}: costs must have one source line per "
+                    "matrix row."
+                )
+            for line in row_lines:
+                if not re.fullmatch(r"        \[[0-9, ]+\],", line):
+                    errors.append(
+                        f"{relative_path}: costs row is not a clean indented "
+                        f"matrix row: {line!r}."
+                    )
+        else:
+            expected_values = expected[name]
+            item_lines = [line for line in value_lines if line.strip()]
+            if len(item_lines) != len(expected_values):
+                errors.append(
+                    f"{relative_path}: {name} must have one source line per "
+                    "vector element."
+                )
+            for line in item_lines:
+                if not re.fullmatch(r"        [0-9]+,", line):
+                    errors.append(
+                        f"{relative_path}: {name} element is not cleanly "
+                        f"indented: {line!r}."
+                    )
+
+
 def check_notebook(
     relative_name: str,
     expected: dict[str, object],
     errors: list[str],
 ) -> None:
-    """Checks one Lab 02 notebook against the transport-contract rules."""
+    """Проверяет один notebook ЛР-02 по контракту транспортной задачи."""
 
     relative_path = Path(relative_name)
     path = LAB_ROOT / relative_path
@@ -233,6 +502,9 @@ def check_notebook(
             errors.append(f"{relative_path}: missing common marker {marker!r}.")
 
     check_code_style(notebook, relative_path, errors)
+    check_russian_docstrings(notebook, relative_path, errors)
+    check_russian_comments(source, relative_path, errors)
+    check_array_formatting(source, relative_path, expected, errors)
 
     is_worked_example = "_example_" in path.name
     is_student = "_student_" in path.name
@@ -262,7 +534,7 @@ def check_notebook(
 
 
 def main() -> None:
-    """Runs the Lab 02 transport notebook contract check."""
+    """Запускает проверку контракта транспортных notebook-ов ЛР-02."""
 
     warnings.filterwarnings("ignore", category=MissingIDFieldWarning)
 
