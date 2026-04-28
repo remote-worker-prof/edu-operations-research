@@ -18,6 +18,7 @@ from nbformat.warnings import MissingIDFieldWarning
 
 ROOT = Path(__file__).resolve().parents[1]
 LAB_ROOT = ROOT / "03-lab-duality-sensitivity"
+THEORY_PATH = LAB_ROOT / "theory_03_duality_sensitivity.md"
 MAX_CODE_LINE_LENGTH = 100
 
 EXPECTED_DATA = {
@@ -226,6 +227,23 @@ WORKED_MARKERS = (
     "Исключения:",
 )
 
+THEORY_BEGINNER_MARKERS = (
+    "зеркал",
+    "теневая цена",
+    "единиц",
+    "A^T",
+    "y_i",
+    "z_j",
+    "-result.ineqlin.marginals",
+)
+
+NOTEBOOK_BEGINNER_MARKERS = (
+    "зеркал",
+    "единица измерения",
+    "нулевая теневая цена",
+    "локальн",
+)
+
 FORBIDDEN_ENGLISH_DOCSTRING_SECTIONS = (
     "Args:",
     "Returns:",
@@ -423,6 +441,25 @@ def check_russian_comments(source: str, relative_path: Path, errors: list[str]) 
             )
 
 
+def has_marker(source: str, marker: str) -> bool:
+    """Ищет маркер без учета регистра для русских учебных фрагментов."""
+
+    return marker.lower() in source.lower()
+
+
+def check_beginner_markers(
+    source: str,
+    relative_path: Path,
+    markers: tuple[str, ...],
+    errors: list[str],
+) -> None:
+    """Проверяет наличие beginner-маркеров доступного объяснения duality."""
+
+    for marker in markers:
+        if not has_marker(source, marker):
+            errors.append(f"{relative_path}: missing beginner marker {marker!r}.")
+
+
 def check_array_formatting(
     source: str,
     relative_path: Path,
@@ -515,6 +552,12 @@ def check_notebook(
     check_code_style(notebook, relative_path, errors)
     check_russian_docstrings(notebook, relative_path, errors)
     check_russian_comments(source, relative_path, errors)
+    check_beginner_markers(
+        source,
+        relative_path,
+        NOTEBOOK_BEGINNER_MARKERS,
+        errors,
+    )
     check_array_formatting(source, relative_path, expected, errors)
 
     is_worked_example = "_example_" in path.name
@@ -539,6 +582,22 @@ def check_notebook(
             )
 
 
+def check_theory(errors: list[str]) -> None:
+    """Проверяет, что теория ЛР-03 содержит новичковое объяснение duality."""
+
+    if not THEORY_PATH.exists():
+        errors.append(f"{THEORY_PATH.relative_to(ROOT)}: theory file is missing.")
+        return
+
+    source = THEORY_PATH.read_text(encoding="utf-8")
+    check_beginner_markers(
+        source,
+        THEORY_PATH.relative_to(ROOT),
+        THEORY_BEGINNER_MARKERS,
+        errors,
+    )
+
+
 def main() -> None:
     """Запускает проверку контракта notebook-ов ЛР-03."""
 
@@ -558,6 +617,8 @@ def main() -> None:
         errors.append(f"missing Lab 03 notebooks: {missing!r}.")
     if unexpected:
         errors.append(f"unexpected Lab 03 notebooks: {unexpected!r}.")
+
+    check_theory(errors)
 
     for relative_name, expected in EXPECTED_DATA.items():
         check_notebook(relative_name, expected, errors)
