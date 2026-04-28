@@ -35,6 +35,7 @@ uv sync --group authoring --group docs
 uv run python scripts/validate_notebooks.py
 uv run python scripts/check_notebook_contracts.py
 uv run python scripts/check_lab02_transport_contract.py
+uv run python scripts/check_lab03_duality_contract.py
 uv run python scripts/execute_worked_examples.py
 uv run jupyter-book clean . --all
 uv run jupyter-book build . --all --warningiserror
